@@ -16,11 +16,6 @@ namespace GoProMerger
             var listFilePath = Path.Combine(dir, "list.txt");
             var concatFilePath = Path.Combine(dir, "concat.bat");
 
-            //if (File.Exists(listFilePath))
-            //{
-            //    File.Delete(listFilePath);
-            //}
-
             var index = 1;
             foreach (var file in files.ToList())
             {
@@ -36,6 +31,7 @@ namespace GoProMerger
                         listFilePath,
                         fileSequence.Select(name => "file " + Path.GetFileName(name)));
 
+                    //File.WriteAllText(concatFilePath, $"ffmpeg -y -f concat -i list.txt -filter:v \"hflip, vflip\" -codec:a copy output{index++}.mp4");
                     File.WriteAllText(concatFilePath, $"ffmpeg -y -f concat -i list.txt -c copy output{index++}.mp4");
                     var processStartInfo = new ProcessStartInfo(concatFilePath);
                     processStartInfo.WorkingDirectory = dir;
